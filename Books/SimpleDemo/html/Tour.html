@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.1. OpenDSA: A Guided Tour &mdash; Developer Introduction</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/JSAV.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaMOD-min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/jquery.ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaStyle-min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/accessibility.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '0.4.1',
+      COLLAPSE_INDEX: false,
+      FILE_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": {
+        scale: "80"
+      }
+    });
+  </script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="index" title="Developer Introduction" href="index.html" />
+    <link rel="next" title="2. Contributing to OpenDSA" href="Contributing.html" />
+    <link rel="prev" title="1. How to Use this System" href="Intro.html" />
+
+  </head>
+
+  <body>
+
+
+      <div class="header">
+        
+  
+      <script type="text/javascript" src="../../../lib/jquery.min.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery.migrate.min.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js"></script>
+      <script type="text/javascript" src="../../../lib/accessibility.js"></script>
+    <script type="text/javascript" src="../../../lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="../../../lib/jquery.transit.js"></script>
+    <script type="text/javascript" src="../../../lib/raphael.js"></script>
+    <script type="text/javascript" src="../../../lib/JSAV-min.js"></script>
+    <script type="text/javascript" src="_static/config.js"></script>
+    <script type="text/javascript" src="../../../lib/timeme-min.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaUtils-min.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaMOD-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <script type="text/javascript" src="../../../lib/dataStructures.js"></script>
+    <script type="text/javascript" src="../../../lib/conceptMap.js"></script>
+
+        
+<a id="username-link" style="float:right;color:red;margin:10px 20px auto; display: none" class="username-link" href="Gradebook.html"></a>
+<a id="login-link" style="float:right;color:red;margin:10px 20px auto" class="login-link" href="#"><Macro 'login'></a>
+<div id="login-box" class="login-popup">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <label class="username">
+        <span>Username</span>
+        <input id="username" value="" type="text" autocomplete="on" placeholder="Username" tabindex="1">
+      </label>
+      <label class="password">
+        <span>Password</span>
+        <input id="password" value="" type="password" placeholder="Password" tabindex="2">
+        <span><a id="forgot" href="#">Forgot your password?</a></span>
+      </label>
+
+      <p>
+        <input type="submit" id="login-submit-button" value="Sign in" tabindex="3" />
+      </p>
+      <p>
+        <input type="button" id="register-button" value="Register" tabindex="4" />
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+        
+<a id="registration-link" style="float:right;color:red;margin:10px 20px auto" class="registration-link" href="#">Register</a>
+<div id="registration-box" class="registration-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <div id="register_error" class="error"></div>
+      <label class="username">
+        <span>Username:</span>
+        <input type="text" id="user" placeholder="Username" />
+      </label>
+
+      <label class="password">
+        <span>Password</span>
+        <input id="pass" type="password" placeholder="Password" />
+      </label>
+
+      <label class="password">
+        <span>Confirm Password</span>
+        <input id="rpass" type="password" placeholder="Confirm Password" />
+      </label>
+
+      <label class="email">
+        <span>Email:</span>
+        <input type="text" id="email" placeholder="Email">
+      </label>
+
+      <p>
+        <input type="submit" id="register-submit-button" value="Register &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+<img class="leftlogo" src="_static/OpenDSALogoT64.png" alt="Logo"/><div class="title-wrapper">
+          <div class="title-inbetween" style="display: table-cell; vertical-align: middle;">
+            <div class="title-content">
+              <h1 class="heading" ><a href="index.html">
+                <span>Developer Introduction</span></a></h1>
+              <h2 class="heading" ><span>Chapter 1 Introduction to OpenDSA for Developers</span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="topnav">
+        <p>
+            <a style="float:left;color:blue;" href="../source/Tour.rst.rst"
+              target="_blank" rel="nofollow">Show Source | </a>&#160;&#160;
+            <a class="abt" style="float:left;color:blue;" href="#" rel="nofollow">| About</a>&#160;&#160;
+
+          
+        «&#160;&#160;<a id="prevmod" href="Intro.html">0.<span class="section-number">1. </span>How to Use this System</a>
+        &#160;&#160;::&#160;&#160;
+        <a  class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a  id="nextmod" href="Contributing.html">1.<span class="section-number">2. </span>Contributing to OpenDSA</a>&#160;&#160;»
+
+
+        </p>
+      </div>
+       
+      <div class="content">
+        
+  <script>ODSA.SETTINGS.MODULE_SECTIONS = ['making-a-book', 'textual-content', 'visualizations', 'exercises', 'binary-search-tree-small-count-exercise'];</script><script>ODSA.SETTINGS.DISP_MOD_COMP = true;ODSA.SETTINGS.MODULE_NAME = "Tour";ODSA.SETTINGS.MODULE_LONG_NAME = "OpenDSA: A Guided Tour";ODSA.SETTINGS.MODULE_CHAPTER = "Introduction to OpenDSA for Developers"; ODSA.SETTINGS.BUILD_DATE = "2021-10-24 13:00:15"; ODSA.SETTINGS.BUILD_CMAP = false;JSAV_OPTIONS['lang']='en';JSAV_EXERCISE_OPTIONS['code']='java';</script><div class="section" id="opendsa-a-guided-tour">
+<h1>1.<span class="section-number">1. </span>OpenDSA: A Guided Tour<a class="headerlink" href="#opendsa-a-guided-tour" title="Permalink to this headline">¶</a></h1>
+<p>This page gives a tour of the major features of OpenDSA from a user’s
+perspective.</p>
+<div class="section" id="making-a-book">
+<h2>1.<span class="section-number">1.1. </span>Making a Book<a class="headerlink" href="#making-a-book" title="Permalink to this headline">¶</a></h2>
+<p>The fundamental metaphor is a “textbook”, with each “section” as a
+single HTML page.
+Books can be compiled either as “standalone” web pages, or they can be
+compiled and pushed to a Canvas course shell, where each section is a
+Canvas “module”.</p>
+<p>OpenDSA textbook instances are compiled from configuration files.</p>
+<ul class="simple">
+<li><p>Select written and programming language(s)</p></li>
+<li><p>Select modules</p></li>
+<li><p>Configure exercises</p></li>
+<li><p>There are some controls over whether given sections are included or
+not.</p></li>
+</ul>
+<p>Look at the
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/config/SimpleDemo.json">configuration file</a>
+for the book instance that you are
+looking at right now.</p>
+<p>To compile in “standalone” mode, you just need to have the OpenDSA
+front-end repository set up.
+See
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA">https://github.com/OpenDSA/OpenDSA</a>
+for instructions on how to install this.
+From the top level of the repository, you type <cite>make &lt;bookname&gt;</cite>, and
+then the book is available in <cite>Books/&lt;bookname&gt;</cite>.</p>
+<p>To compile to Canvas, you have to either have the complete development
+stack installed (see
+<a class="reference external" href="https://github.com/OpenDSA/OpenDSA-DevStack">https://github.com/OpenDSA/OpenDSA-DevStack</a>
+for information),
+or you need to have permissions on an OpenDSA server such as the
+OpenDSA production server (
+<a class="reference external" href="https://opendsa-server.cs.vt.edu/">https://opendsa-server.cs.vt.edu/</a>
+)
+or staging server (
+<a class="reference external" href="https://opendsa-staging.cs.vt.edu/">https://opendsa-staging.cs.vt.edu/</a>
+).</p>
+</div>
+<div class="section" id="textual-content">
+<h2>1.<span class="section-number">1.2. </span>Textual content<a class="headerlink" href="#textual-content" title="Permalink to this headline">¶</a></h2>
+<p>All of the usual capabilities that you might expect from any decent
+authoring system.</p>
+<p>Glossary entries with key words like <span class="xref std std-term">data structure</span> embedded
+with links in the text.</p>
+<p>Code displays are configurable to one or more programming languages.</p>
+<div id="Link_Link_code"><ul><li><a href="#Link_Link_code_Java">Java</a></li><li><a href="#Link_Link_code_Java_Generic">Java (Generic)</a></li></ul><div id="Link_Link_code_Java"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Link</span> <span class="p">{</span>         <span class="c1">// Singly linked list node class</span>
+  <span class="kd">private</span> <span class="n">Object</span> <span class="n">e</span><span class="p">;</span>  <span class="c1">// Value for this node</span>
+  <span class="kd">private</span> <span class="n">Link</span> <span class="n">n</span><span class="p">;</span>    <span class="c1">// Point to next node in list</span>
+
+  <span class="c1">// Constructors</span>
+  <span class="n">Link</span><span class="p">(</span><span class="n">Object</span> <span class="n">it</span><span class="p">,</span> <span class="n">Link</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">Link</span><span class="p">(</span><span class="n">Link</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Object</span> <span class="nf">element</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span><span class="p">;</span> <span class="p">}</span>                  <span class="c1">// Return the value</span>
+  <span class="n">Object</span> <span class="nf">setElement</span><span class="p">(</span><span class="n">Object</span> <span class="n">it</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Set element value</span>
+  <span class="n">Link</span> <span class="nf">next</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">n</span><span class="p">;</span> <span class="p">}</span>                       <span class="c1">// Return next link</span>
+  <span class="n">Link</span> <span class="nf">setNext</span><span class="p">(</span><span class="n">Link</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span>      <span class="c1">// Set next link</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div><div id="Link_Link_code_Java_Generic"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="p">{</span>         <span class="c1">// Singly linked list node class</span>
+  <span class="kd">private</span> <span class="n">E</span> <span class="n">e</span><span class="p">;</span>          <span class="c1">// Value for this node</span>
+  <span class="kd">private</span> <span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">n</span><span class="p">;</span>    <span class="c1">// Point to next node in list</span>
+
+  <span class="c1">// Constructors</span>
+  <span class="n">Link</span><span class="p">(</span><span class="n">E</span> <span class="n">it</span><span class="p">,</span> <span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">Link</span><span class="p">(</span><span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">E</span> <span class="nf">element</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span><span class="p">;</span> <span class="p">}</span>                        <span class="c1">// Return the value</span>
+  <span class="n">E</span> <span class="nf">setElement</span><span class="p">(</span><span class="n">E</span> <span class="n">it</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span> <span class="p">}</span>            <span class="c1">// Set element value</span>
+  <span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">next</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">n</span><span class="p">;</span> <span class="p">}</span>                     <span class="c1">// Return next link</span>
+  <span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">setNext</span><span class="p">(</span><span class="n">Link</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">inn</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">n</span> <span class="o">=</span> <span class="n">inn</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Set next link</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div><script>$(function() {$( "#Link_Link_code" ).tabs();});</script><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div id="Insertionsort_Insertionsort_code"><ul><li><a href="#Insertionsort_Insertionsort_code_Java">Java</a></li><li><a href="#Insertionsort_Insertionsort_code_Java_Generic">Java (Generic)</a></li><li><a href="#Insertionsort_Insertionsort_code_Cpp">C++</a></li></ul><div id="Insertionsort_Insertionsort_code_Java"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="kt">void</span> <span class="nf">inssort</span><span class="p">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">A</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="p">.</span><span class="na">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="c1">// Insert i&#39;th record</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="p">;</span> <span class="p">(</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="na">compareTo</span><span class="p">(</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">);</span> <span class="n">j</span><span class="o">--</span><span class="p">)</span>
+      <span class="n">Swap</span><span class="p">.</span><span class="na">swap</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div><div id="Insertionsort_Insertionsort_code_Java_Generic"><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="kt">void</span> <span class="nf">inssort</span><span class="p">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">A</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="p">.</span><span class="na">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Insert i&#39;th record</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="p">;</span> <span class="p">(</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="na">compareTo</span><span class="p">(</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">);</span> <span class="n">j</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div><div id="Insertionsort_Insertionsort_code_Cpp"><div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">inssort</span><span class="p">(</span><span class="n">Comparable</span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Insertion Sort</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="c1">// Insert i&#39;th record</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="mi">-1</span><span class="p">]);</span><span class="w"> </span><span class="n">j</span><span class="o">--</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="mi">-1</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div><script>$(function() {$( "#Insertionsort_Insertionsort_code" ).tabs();});</script><p>Math expressions and tables are expressed using LaTeX notation.</p>
+<div class="math notranslate nohighlight" id="equation-sum1">
+<span class="eqno">(1)<a class="headerlink" href="#equation-sum1" title="Permalink to this equation">¶</a></span>\[\sum_{i = 1}^{n} i = \frac{n (n+1)}{2}.\]</div>
+<div class="math notranslate nohighlight" id="equation-sum2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-sum2" title="Permalink to this equation">¶</a></span>\[\sum_{i = 1}^{n} i^2 = \frac{2 n^3 + 3 n^2 + n}{6} =
+\frac{n(2n + 1)(n + 1)}{6}.\]</div>
+<div class="topic">
+<p class="topic-title">Table 1.1.1 </p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{l|l}
+\{1, 4\}&amp; \mbox{A set composed of the members 1 and 4}\\
+\{\mathsf{x}\, |\, \mathsf{x}\ \mbox{is a positive integer}\}&amp;
+   \mbox{A set definition using a set former}\\
+&amp;\qquad \mbox{Example: the set of all positive integers}\\
+\mathsf{x} \in \mathbf{P}&amp;\mathsf{x}\ \mbox{is a member of set}\ \mathbf{P}\\
+\mathsf{x} \notin \mathbf{P}&amp;\mathsf{x}\ \mbox{is not a member of set}\ \mathbf{P}\\
+\emptyset&amp;\mbox{The null or empty set}\\
+|\mathbf{P}|&amp; \mbox{Cardinality: size of set}\ \mathbf{P}
+           \mbox{or number of members for set}\ \mathbf{P}\\
+\mathbf{P}\,\subseteq\,\mathbf{Q},
+  \mathbf{Q}\,\supseteq\,\mathbf{P}&amp;
+  \mbox{Set}\ \mathbf{P}\ \mbox{is included in set}\ \mathbf{Q},\\
+&amp;\qquad \mbox{set}\ \mathbf{P}\ \mbox{is a subset of set}\ \mathbf{Q},\\
+&amp;\qquad \mbox{set}\ \mathbf{Q}\ \mbox{is a superset of set}\ \mathbf{P}\\
+\mathbf{P}\,\cup\,\mathbf{Q}      &amp;
+  \mbox{Set Union: all elements appearing in}
+  \ \mathbf{P}\ \mbox{OR}\ \mathbf{Q}\\
+\mathbf{P}\,\cap\,\mathbf{Q}      &amp;
+  \mbox{Set Intersection: all elements appearing in}\ \mbox{P}
+  \ \mbox{AND}\ \mathbf{Q}\\
+\mathbf{P}\,-\,\mathbf{Q} &amp;
+  \mbox{Set difference: all elements of set}
+  \ \mathbf{P}\ \mbox{NOT in set}\ \mathbf{Q}\\
+\end{array}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="visualizations">
+<h2>1.<span class="section-number">1.3. </span>Visualizations<a class="headerlink" href="#visualizations" title="Permalink to this headline">¶</a></h2>
+<p>Inline slideshow:</p>
+<div id="insertionsortCON" class="ssAV" data-points="0.0" data-threshold="1.0" data-type="ss" data-required="False" data-short-name="insertionsortCON" data-long-name="Insertion Sort Slideshow" data-exer-id="" alt="Insertion Sort Slideshow" tabIndex="-1">
+ <span class="jsavcounter"></span>
+ <a class="jsavsettings" href="#">Settings</a>
+ <div class="jsavcontrols"></div>
+ <p class="jsavoutput jsavline"></p>
+ <div class="jsavcanvas"></div>
+ <div class="prof_indicators">
+  <img id="insertionsortCON_check_mark" class="prof_check_mark" src="_static/Images/green_check.png" alt="Proficient" />
+  <span id="insertionsortCON_cm_saving_msg" class="cm_saving_msg">Saving...</span>
+  <span id="insertionsortCON_cm_error_msg" class="cm_error_msg">
+   <img id="insertionsortCON_cm_warning_icon" class="cm_warning_icon" src="_static/Images/warning.png" alt="Error Saving" /><br />
+   Server Error<br />
+   <a href="#" class="resubmit_link">Resubmit</a>
+  </span>
+ </div>
+</div>
+<p></p>
+<p>Use of iframes:</p>
+
+<p>We can also configure visualizations for other languages (written or
+programming). In the following example, click on the gear icon in the
+upper-right corner. Then select another language from the menu.</p>
+<div
+    id="graphGenerator"
+    class="embedContainer"
+    data-exer-name="graphGenerator"
+    data-long-name="graphGenerator"
+    data-short-name="graphGenerator"
+    data-frame-src="../../../AV/deep1/graphGenerator.html?localMode=true&amp;module=Tour&amp;selfLoggingEnabled=false&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-vertical-scrolling="no"
+    data-external="false"
+    data-points="0.0"
+    data-required="False"
+    data-showhide="show"
+    data-threshold="1"
+    data-type="ss"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="graphGenerator_iframe"></div>
+  </div>
+</div>
+<div
+    id="insertionsortAV"
+    class="embedContainer"
+    data-exer-name="insertionsortAV"
+    data-long-name="insertionsortAV"
+    data-short-name="insertionsortAV"
+    data-frame-src="../../../AV/Sorting/insertionsortAV.html?localMode=true&amp;module=Tour&amp;selfLoggingEnabled=false&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-vertical-scrolling="no"
+    data-external="false"
+    data-points="0.0"
+    data-required="False"
+    data-showhide="show"
+    data-threshold="1"
+    data-type="ss"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="insertionsortAV_iframe"></div>
+  </div>
+</div>
+</div>
+<div class="section" id="exercises">
+<h2>1.<span class="section-number">1.4. </span>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>Of course we have a range of “standard” exercises (driven by the Khan
+Academy Exercise Infrastructure).
+Here is a battery of basic questions of “fill in the blank” or
+multiple choice type.</p>
+<div
+    id="DefSumm"
+    class="embedContainer"
+    data-exer-name="DefSumm"
+    data-long-name="DefSumm"
+    data-short-name="DefSumm"
+    data-frame-src="../../../Exercises/Binary/DefSumm.html?localMode=true&amp;module=Tour&amp;selfLoggingEnabled=false&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java"
+    data-frame-width="950"
+    data-frame-height="700"
+    data-vertical-scrolling="no"
+    data-external="false"
+    data-points="1.0"
+    data-required="True"
+    data-showhide="show"
+    data-threshold="5"
+    data-type="ka"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="DefSumm_iframe"></div>
+  </div>
+</div>
+<p>We can also use this same infrastructure for more interactive
+exercises.
+In particular, KA exercises can integrate with our own JSAV
+visualization library to show data structures generated on-the-fly.</p>
+<div
+    id="InssortPRO"
+    class="embedContainer"
+    data-exer-name="InssortPRO"
+    data-long-name="InssortPRO"
+    data-short-name="InssortPRO"
+    data-frame-src="../../../Exercises/Sorting/InssortPRO.html?localMode=true&amp;module=Tour&amp;selfLoggingEnabled=false&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-vertical-scrolling="no"
+    data-external="false"
+    data-points="1.0"
+    data-required="True"
+    data-showhide="show"
+    data-threshold="5"
+    data-type="ka"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="InssortPRO_iframe"></div>
+  </div>
+</div>
+<p>We have a special type of exercise that we call a
+“proficiency exercise”.
+Students demonstrate that they understand how a given algorithm works.
+(By the way, you can change the programming language used in the code
+example of this exercise by clicking on the settings icon.)</p>
+<div
+    id="btTravInorderPRO"
+    class="embedContainer"
+    data-exer-name="btTravInorderPRO"
+    data-long-name="btTravInorderPRO"
+    data-short-name="btTravInorderPRO"
+    data-frame-src="../../../AV/Binary/btTravInorderPRO.html?localMode=true&amp;module=Tour&amp;selfLoggingEnabled=false&amp;JXOP-debug=true&amp;JOP-lang=en&amp;JXOP-code=java"
+    data-frame-width="950"
+    data-frame-height="650"
+    data-vertical-scrolling="no"
+    data-external="false"
+    data-points="2.0"
+    data-required="True"
+    data-showhide="show"
+    data-threshold="0.9"
+    data-type="pe"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="btTravInorderPRO_iframe"></div>
+  </div>
+</div>
+</div>
+<div class="section" id="binary-search-tree-small-count-exercise">
+<h2>1.<span class="section-number">1.5. </span>Binary Search Tree Small Count Exercise<a class="headerlink" href="#binary-search-tree-small-count-exercise" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we have support for small programming exercises.
+These are implemented using Code Workout.</p>
+<div
+    id="Binary_Search_Tree_Small_Count_Exercise"
+    class="embedContainer"
+    data-exer-name="Binary_Search_Tree_Small_Count_Exercise"
+    data-long-name="Binary Search Tree Small Count Exercise"
+    data-short-name="Binary Search Tree Small Count Exercise"
+    data-frame-src="https://codeworkout.cs.vt.edu/gym/workouts/embed?resource_name=Binary+Search+Tree+Small+Count+Exercise"
+    data-frame-width="1000"
+    data-frame-height="900"
+    data-type="external_tool"
+    data-workout-id="64"
+    data-exer-id="">
+  
+  <div class="center">
+    <div id="Binary_Search_Tree_Small_Count_Exercise_iframe"></div>
+  </div>
+</div>
+<script type="text/javascript" src="../../../AV/Sorting/insertionsortCON.js"></script>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      <p><span class="email_div" style="display:inline;"><a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a><a style="float:left;color:blue;" rel="nofollow" href="../../../lib/Privacy.html" target="_blank">| Privacy |</a> <a style="float:left;color:blue;" rel="nofollow" href="../../../lib/license.html" target="_blank">| License</a></span>&#160;&#160;
+      
+        «&#160;&#160;<a id="prevmod1" href="Intro.html">0.<span class="section-number">1. </span>How to Use this System</a>
+        &#160;&#160;::&#160;&#160;
+        <a  class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a  id="nextmod1" href="Contributing.html">1.<span class="section-number">2. </span>Contributing to OpenDSA</a>&#160;&#160;»
+
+</p>
+      </div>
+      <img style="float:right;" src="_static/nsf1.gif" height="62" width="62" alt="nsf"/>
+
+
+    <div class="footer">
+      <p>
+        <span class="email_div" style="display:inline;">
+          <a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a>
+          <a id="bugreport-link" style="float:left;color:blue;" class="bugreport-link" href="#">| Report a bug</a>
+        </span>
+      </p>
+        &copy; Copyright 2016 by OpenDSA Project Contributors and distributed under an MIT license.
+      Last updated on Oct 24, 2021.
+      Created using <a target="_blank" href="http://sphinx.pocoo.org/">Sphinx</a> 2.4.4.
+    </div>
+    
+<div id="bugreport-box" class="bugreport-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="report" action="https://#">
+    <fieldset class="textbox">
+      <div id="bug_error" class="error"></div>
+      <label>
+        <span>Summary*:</span>
+        <input type="text" id="b_title" placeholder="Summary" />
+      </label>
+
+      <label class="os">
+        <span>Operating system*:</span>
+        <select id="b_os">
+          <option value="windows">Windows</option>
+          <option value="macos">Mac OS</option>
+          <option value="linux">Linux</option>
+          <option value="ios">iOS</option>
+          <option value="android">Android</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="browser">
+        <span>Browser*:</span>
+        <select id="b_browser">
+          <option value="chrome">Chrome</option>
+          <option value="safari">Safari</option>
+          <option value="internetexplorer">Internet Explorer</option>
+          <option value="opera">Opera</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="description">
+        <span>Description*:</span><br>
+        <textarea id="b_description" rows="5" cols="25" placeholder="***BUG** Please enter: (1) a consice description of the problem. (2) steps to reproduce bug. (3) the version of your browser and operating system."></textarea>
+      </label>
+
+      <label class="screenshot">
+        <span>Attach a screenshot (optional):</span>
+        <input type="file" id="b_screenshot" accept="image/*" placeholder="Attach a screenshot (optional)">
+      </label>
+
+      <p>
+        <input type="submit" id="bug-submit-button" value="Submit &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+  </body>
+</html>

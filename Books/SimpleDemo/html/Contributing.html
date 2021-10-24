@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2. Contributing to OpenDSA &mdash; Developer Introduction</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/JSAV.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaMOD-min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/jquery.ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/odsaStyle-min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../lib/accessibility.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '0.4.1',
+      COLLAPSE_INDEX: false,
+      FILE_SUFFIX: '.html',
+      HAS_SOURCE:  true
+    };
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": {
+        scale: "80"
+      }
+    });
+  </script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="index" title="Developer Introduction" href="index.html" />
+    <link rel="next" title="1. Slide Shows, KA and JSAV Exercises in OpenDSA" href="DemoIntro.html" />
+    <link rel="prev" title="1. OpenDSA: A Guided Tour" href="Tour.html" />
+
+  </head>
+
+  <body>
+
+
+      <div class="header">
+        
+  
+      <script type="text/javascript" src="../../../lib/jquery.min.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery.migrate.min.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/localforage/1.9.0/localforage.min.js"></script>
+      <script type="text/javascript" src="../../../lib/accessibility.js"></script>
+    <script type="text/javascript" src="../../../lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="../../../lib/jquery.transit.js"></script>
+    <script type="text/javascript" src="../../../lib/raphael.js"></script>
+    <script type="text/javascript" src="../../../lib/JSAV-min.js"></script>
+    <script type="text/javascript" src="_static/config.js"></script>
+    <script type="text/javascript" src="../../../lib/timeme-min.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaUtils-min.js"></script>
+    <script type="text/javascript" src="../../../lib/odsaMOD-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <script type="text/javascript" src="../../../lib/dataStructures.js"></script>
+    <script type="text/javascript" src="../../../lib/conceptMap.js"></script>
+
+        
+<a id="username-link" style="float:right;color:red;margin:10px 20px auto; display: none" class="username-link" href="Gradebook.html"></a>
+<a id="login-link" style="float:right;color:red;margin:10px 20px auto" class="login-link" href="#"><Macro 'login'></a>
+<div id="login-box" class="login-popup">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <label class="username">
+        <span>Username</span>
+        <input id="username" value="" type="text" autocomplete="on" placeholder="Username" tabindex="1">
+      </label>
+      <label class="password">
+        <span>Password</span>
+        <input id="password" value="" type="password" placeholder="Password" tabindex="2">
+        <span><a id="forgot" href="#">Forgot your password?</a></span>
+      </label>
+
+      <p>
+        <input type="submit" id="login-submit-button" value="Sign in" tabindex="3" />
+      </p>
+      <p>
+        <input type="button" id="register-button" value="Register" tabindex="4" />
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+        
+<a id="registration-link" style="float:right;color:red;margin:10px 20px auto" class="registration-link" href="#">Register</a>
+<div id="registration-box" class="registration-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="signin" action="https://#">
+    <fieldset class="textbox">
+      <div id="register_error" class="error"></div>
+      <label class="username">
+        <span>Username:</span>
+        <input type="text" id="user" placeholder="Username" />
+      </label>
+
+      <label class="password">
+        <span>Password</span>
+        <input id="pass" type="password" placeholder="Password" />
+      </label>
+
+      <label class="password">
+        <span>Confirm Password</span>
+        <input id="rpass" type="password" placeholder="Confirm Password" />
+      </label>
+
+      <label class="email">
+        <span>Email:</span>
+        <input type="text" id="email" placeholder="Email">
+      </label>
+
+      <p>
+        <input type="submit" id="register-submit-button" value="Register &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+<img class="leftlogo" src="_static/OpenDSALogoT64.png" alt="Logo"/><div class="title-wrapper">
+          <div class="title-inbetween" style="display: table-cell; vertical-align: middle;">
+            <div class="title-content">
+              <h1 class="heading" ><a href="index.html">
+                <span>Developer Introduction</span></a></h1>
+              <h2 class="heading" ><span>Chapter 1 Introduction to OpenDSA for Developers</span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="topnav">
+        <p>
+            <a style="float:left;color:blue;" href="../source/Contributing.rst.rst"
+              target="_blank" rel="nofollow">Show Source | </a>&#160;&#160;
+            <a class="abt" style="float:left;color:blue;" href="#" rel="nofollow">| About</a>&#160;&#160;
+
+          
+        «&#160;&#160;<a id="prevmod" href="Tour.html">1.<span class="section-number">1. </span>OpenDSA: A Guided Tour</a>
+        &#160;&#160;::&#160;&#160;
+        <a  class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a  id="nextmod" href="DemoIntro.html">2.<span class="section-number">1. </span>Slide Shows, KA and JSAV Exercises in OpenDSA</a>&#160;&#160;»
+
+
+        </p>
+      </div>
+       
+      <div class="content">
+        
+  <script>ODSA.SETTINGS.MODULE_SECTIONS = ['editing-rst', 'translation-support', 'exercises-with-the-ka-framework'];</script><script>ODSA.SETTINGS.DISP_MOD_COMP = true;ODSA.SETTINGS.MODULE_NAME = "Contributing";ODSA.SETTINGS.MODULE_LONG_NAME = "Contributing to OpenDSA";ODSA.SETTINGS.MODULE_CHAPTER = "Introduction to OpenDSA for Developers"; ODSA.SETTINGS.BUILD_DATE = "2021-10-24 13:00:15"; ODSA.SETTINGS.BUILD_CMAP = false;JSAV_OPTIONS['lang']='en';JSAV_EXERCISE_OPTIONS['code']='java';</script><div class="section" id="contributing-to-opendsa">
+<h1>1.<span class="section-number">2. </span>Contributing to OpenDSA<a class="headerlink" href="#contributing-to-opendsa" title="Permalink to this headline">¶</a></h1>
+<p>OpenDSA is an Open Source project. Many people have contributed over
+the years.</p>
+<p>Fundamentally, OpenDSA has two parts: Intrastructure and Content.</p>
+<ul class="simple">
+<li><p>Most contributors contribute content. Many types of content are
+easy.</p></li>
+<li><p>Many students like to learn learn HTML5/CSS/JavaScript, and
+contributing to OpenDSA is a good vehicle to motivate learning
+these things.</p></li>
+</ul>
+<div class="section" id="editing-rst">
+<h2>1.<span class="section-number">2.1. </span>Editing RST<a class="headerlink" href="#editing-rst" title="Permalink to this headline">¶</a></h2>
+<p>The “textual” content is written using ReStructuredText (RST).
+This is a so-called “simple markup” language, similar to what most
+wikis use, and similar to MarkDown.
+It is pretty easy to look at an example source file, and quickly see
+how to modify or write new content.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://docutils.sourceforge.net/rst.html">Homepage</a></p></li>
+<li><p><a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">Quick reference</a></p></li>
+</ul>
+<p>See <a class="reference external" href="https://raw.githubusercontent.com/OpenDSA/OpenDSA/master/RST/en/SimpleDemo/Contributing.rst">example</a>.</p>
+</div>
+<div class="section" id="translation-support">
+<h2>1.<span class="section-number">2.2. </span>Translation support<a class="headerlink" href="#translation-support" title="Permalink to this headline">¶</a></h2>
+<p>OpenDSA provides support for generating book instances in other
+written languages, if the translations are available.</p>
+<ul class="simple">
+<li><p>See OpenDSA’s RST file <a class="reference external" href="https://github.com/OpenDSA/OpenDSA/tree/master/RST">directory structure</a></p></li>
+<li><p>Each written language gets its own directory. The subdirectory
+structure and file names must match.</p></li>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/OpenDSA/OpenDSA/master/RST/fi/Sorting/Mergesort.rst">Example</a></p></li>
+</ul>
+<p>AVs and exercises also have a mechanism to support translation (as
+well as alternate code languages.
+This is done using a JSON file to specify the alternatives.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/AV/Sorting/insertionsortAV.json">Example</a></p></li>
+</ul>
+</div>
+<div class="section" id="exercises-with-the-ka-framework">
+<h2>1.<span class="section-number">2.3. </span>Exercises with the KA framework<a class="headerlink" href="#exercises-with-the-ka-framework" title="Permalink to this headline">¶</a></h2>
+<p>The Khan Academy exercise framework provides a rich mechanism for
+creating almost any exercise that you can imagine an algorithm to:</p>
+<ul class="simple">
+<li><p>Generate the problem instance statement</p></li>
+<li><p>Generate the model answer</p></li>
+<li><p>Provide a user interface to specify the student answer</p></li>
+<li><p>Compare the student answer to the model answer to determine if it
+is correct.</p></li>
+</ul>
+<p>Exercises are specified with a specialized HTML markup, with
+JavaScript available for computation.</p>
+<p>A variety of simple “static” exercises, or exercises with “simple”
+forms of parameterization do not require programming expertise.</p>
+<p>Examples:</p>
+<ul>
+<li><p>Multiple choice question (with math), hints</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Sorting/BinsortMCQ2.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Sorting/BinsortMCQ2.html">Source</a></p>
+</li>
+<li><p>Simple (text-only) “spin”</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Sorting/MergesortMCQcost.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Sorting/MergesortMCQcost.html">Source</a></p>
+</li>
+<li><p>None-of-the-above distractor, simple computation</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Sorting/ShellsortMCQ3.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Sorting/ShellsortMCQ3.html">Source</a></p>
+</li>
+<li><p>Summary question</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Sorting/InssortSumm.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Sorting/InssortSumm.html">Source</a></p>
+</li>
+<li><p>More complicated computation/selection</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Indexing/IndexChoice.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Indexing/IndexChoice.html">Source</a></p>
+</li>
+<li><p>Generating a problem instance and computing its answer on-the-fly</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Binary/TreeOverheadFIB.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Binary/TreeOverheadFIB.html">Source</a></p>
+</li>
+<li><p>Simple JSAV integration</p>
+<p><a class="reference external" href="https://lti.cs.vt.edu/LTI_ruby/Exercises/Binary/Treeprobs.html">Question</a></p>
+<p><a class="reference external" href="https://github.com/OpenDSA/OpenDSA/blob/master/Exercises/Binary/Treeprobs.html">Source</a></p>
+</li>
+</ul>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      <p><span class="email_div" style="display:inline;"><a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a><a style="float:left;color:blue;" rel="nofollow" href="../../../lib/Privacy.html" target="_blank">| Privacy |</a> <a style="float:left;color:blue;" rel="nofollow" href="../../../lib/license.html" target="_blank">| License</a></span>&#160;&#160;
+      
+        «&#160;&#160;<a id="prevmod1" href="Tour.html">1.<span class="section-number">1. </span>OpenDSA: A Guided Tour</a>
+        &#160;&#160;::&#160;&#160;
+        <a  class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a  id="nextmod1" href="DemoIntro.html">2.<span class="section-number">1. </span>Slide Shows, KA and JSAV Exercises in OpenDSA</a>&#160;&#160;»
+
+</p>
+      </div>
+      <img style="float:right;" src="_static/nsf1.gif" height="62" width="62" alt="nsf"/>
+
+
+    <div class="footer">
+      <p>
+        <span class="email_div" style="display:inline;">
+          <a id="contact_us" class="contact" style="float:left;color:blue;" rel="nofollow" href="mailto:">Contact Us |</a>
+          <a id="bugreport-link" style="float:left;color:blue;" class="bugreport-link" href="#">| Report a bug</a>
+        </span>
+      </p>
+        &copy; Copyright 2016 by OpenDSA Project Contributors and distributed under an MIT license.
+      Last updated on Oct 24, 2021.
+      Created using <a target="_blank" href="http://sphinx.pocoo.org/">Sphinx</a> 2.4.4.
+    </div>
+    
+<div id="bugreport-box" class="bugreport-popup ">
+  <a href="#" class="close"><img src="_static/Images/close_pop.png" class="btn_close" title="Close Window" alt="Close Window" /></a>
+  <form method="post" class="report" action="https://#">
+    <fieldset class="textbox">
+      <div id="bug_error" class="error"></div>
+      <label>
+        <span>Summary*:</span>
+        <input type="text" id="b_title" placeholder="Summary" />
+      </label>
+
+      <label class="os">
+        <span>Operating system*:</span>
+        <select id="b_os">
+          <option value="windows">Windows</option>
+          <option value="macos">Mac OS</option>
+          <option value="linux">Linux</option>
+          <option value="ios">iOS</option>
+          <option value="android">Android</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="browser">
+        <span>Browser*:</span>
+        <select id="b_browser">
+          <option value="chrome">Chrome</option>
+          <option value="safari">Safari</option>
+          <option value="internetexplorer">Internet Explorer</option>
+          <option value="opera">Opera</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+
+      <label class="description">
+        <span>Description*:</span><br>
+        <textarea id="b_description" rows="5" cols="25" placeholder="***BUG** Please enter: (1) a consice description of the problem. (2) steps to reproduce bug. (3) the version of your browser and operating system."></textarea>
+      </label>
+
+      <label class="screenshot">
+        <span>Attach a screenshot (optional):</span>
+        <input type="file" id="b_screenshot" accept="image/*" placeholder="Attach a screenshot (optional)">
+      </label>
+
+      <p>
+        <input type="submit" id="bug-submit-button" value="Submit &rarr;"/>
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+  </body>
+</html>
