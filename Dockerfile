@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.13.0a4-alpine
 
 ARG ODSA_ENV="DEV"
 ENV ODSA_ENV=${ODSA_ENV}
